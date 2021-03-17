@@ -1,0 +1,1 @@
+This repository will hold a website providing both an interactive simulation of Single Transferrable Vote, and information about the system as well as ongoing efforts to have it implemented in the United States of America.
