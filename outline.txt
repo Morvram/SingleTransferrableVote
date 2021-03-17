@@ -1,0 +1,22 @@
+PLAN FOR SITE
+
+FRAMEWORK: Django?
+
+Simulation section of site:
+    Takes information from user:
+        Number of districts
+        Number of voters in each district
+        Number of candidates in each district
+        How many candidates will be elected in each district? (proportional to the number of voters in that district)
+        THEN
+        For each district:
+            How will each voter in this district vote? (percentages per candidate in the district)
+    Calculates the simulation:
+
+    Returns information about the results of the election.
+
+Informational section of site:
+    Explanation of what Single Transferrable Vote is, its origins, how it works, the rationale behind it.
+
+Activism section of site:
+    Explanation of current efforts to have STV implemented in the United States.
