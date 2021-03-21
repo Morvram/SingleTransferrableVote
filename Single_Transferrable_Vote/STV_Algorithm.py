@@ -1,4 +1,5 @@
 from voterGenerationAlgorithm import *
+from District import *
 
 #Takes: A list of District objects, each of which contains: a list of candidates, a list of Voter objects,
 # and the number of representatives to be elected from the District in question.
@@ -7,7 +8,7 @@ from voterGenerationAlgorithm import *
 #Returns: A list of districts <outDistrict>, each of which 
 
 class outDistrict:
-    def init(self, name, winners):
+    def __init__(self, name, winners):
         self.name = name #the name of the district
         self.winners = winners #a list of the winning candidates from that district
 
@@ -17,10 +18,14 @@ def STV_Algorithm(districts): #returns a list of outDistrict objects!
         #Resolve that district individually and add the result to the list
     #Return the completed list
     
-    #TODO
+    #TEST
+    outlist = []
+    for dist in districts:
+        outlist.append(resolve_district(dist))
+    return outlist
 
 
-def resolve_district(d): #Returns an outDistrict object!
+def resolve_district(d): #Returns an outDistrict object! #TODO
     #Resolve the district d by doing the following steps:
     #First, count all the first place votes. Each District contains Voters which contain a first, second, and third choice.
     #determine the vote threshold by dividing the total number of voters by the repsToElect number of the District.
@@ -31,5 +36,18 @@ def resolve_district(d): #Returns an outDistrict object!
         #If they have, return the district.
         #If they have not, eliminate the last place candidate from the running. For each Voter in that Candidate's voters list, transfer that voter to 
         #Their next choice candidate's pool instead (assuming taht candidate hasn't already won a seat).
+    
+    voteThreshold = length(d.voters) / repsToElect
+    for c in d.candidates:
+        c.votesNeeded = voteThreshold #set that candidate's votesNeeded to the vote threshold.
 
-    #TODO
+    #Count all the first-place votes
+    for voter in d.voters:
+        voter.resolveVote()
+
+    #TODO [LOOP UNTIL EVERY CANDIDATE HAS WON A SEAT AND WE END UP RETURNING OUTDISTRICT] Check if all seats have been filled, now that each voter's vote has been assigned to one candidate.
+        #If they have, return the outDistrict as a list of winning candidates.
+
+        #If they have not, sort d.candidates by the votesGained. Then eliminate the last place candidate from the running and, for each Voter in that candidate's Voters list, increment choice by 1 and resolveVoter again
+
+    

@@ -1,7 +1,7 @@
 from District import *
 
 
-def voterGenerationAlgorithm(districts, candidatesPerDistrict, choiceVotesForCandidate):
+def voterGenerationAlgorithm(districts, candidatesPerDistrict, choiceVotesForCandidate): #TODO
     #districts = a list (1d) of districts
     #candidatesPerDistrict = a list (2d) of lists of candidates, of equal length.
     #choiceVotesForCandidate = a list (3d):
@@ -27,5 +27,5 @@ def voterGenerationAlgorithm(districts, candidatesPerDistrict, choiceVotesForCan
             #Do the same for second choice, third choice, etc etc until the end
     #You should now have a list of Districts, each of which has Candidates (whose Voter pools are not yet filled)
     #and Voters (with their choices determined) within.
-
-    #TODO
+    
+    pass
