@@ -33,4 +33,3 @@ def resolve_district(d): #Returns an outDistrict object!
         #Their next choice candidate's pool instead (assuming taht candidate hasn't already won a seat).
 
     #TODO
-    
