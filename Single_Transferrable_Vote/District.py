@@ -16,12 +16,20 @@ class Voter:
     def __init__(self, votes):
         self.votes = votes #A list of Candidates ordered by preference
 
-    def resolveVote(self): #TODO
-        #If your current choice doesn't have enough votes, keep that as your choice and add self to that Candidate's list of voters.
-        #If your current choice DOES have enough votes and you're not at the end of your list of choices, increase choice by 1 and try again.
-        
+    def resolveVote(self):
+        #If your current choice doesn't have enough votes, keep that as your choice
+        # and add self to that Candidate's list of voters.
+        if length(votes[choice].voters) < votes[choice].votesNeeded and self not in votes[choice].voters:
+            votes[choice].voters.append(self)
+        #If your current choice DOES have enough votes and you're not at the end of your list of choices,
+        # increase choice by 1 and try again.
+        else:
+            self.choice += 1
+            if self.choice >= length(self.votes):
+                print("Problem: Not enough choices were provided, and a voter exceeded their list of chosen candidates!")
+                return #Something has gone wrong
+            self.resolveVote() #the "try again" phase
 
-        pass
 
 class Candidate:
     def __init__(self, name):
