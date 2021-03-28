@@ -48,6 +48,16 @@ def resolve_district(d): #Returns an outDistrict object! #TODO
     #TODO [LOOP UNTIL EVERY CANDIDATE HAS WON A SEAT AND WE END UP RETURNING OUTDISTRICT] Check if all seats have been filled, now that each voter's vote has been assigned to one candidate.
         #If they have, return the outDistrict as a list of winning candidates.
 
-        #If they have not, sort d.candidates by the votesGained. Then eliminate the last place candidate from the running and, for each Voter in that candidate's Voters list, increment choice by 1 and resolveVoter again
-
-    
+        #If they have not, sort d.candidates by the votesGained. Then eliminate the last place candidate from the running and,
+        # for each Voter in that candidate's Voters list, increment choice by 1 and resolveVoter again
+    out = outDistrict(d.name, [])
+    while True:
+        if length(out.winners) == repsToElect:
+            return out #end function!
+        #Sort d.candidates by votesGained
+        d.candidates.sort(key=lambda x: x.count, reverse=True)
+        dropout = d.candidates[length(d.candidates-1)]
+        d.candidates.remove(dropout)
+        for v in dropout.voters:
+            v.choice += 1
+            v.resolveVote()
