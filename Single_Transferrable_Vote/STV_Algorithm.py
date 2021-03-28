@@ -25,7 +25,7 @@ def STV_Algorithm(districts): #returns a list of outDistrict objects!
     return outlist
 
 
-def resolve_district(d): #Returns an outDistrict object! #TODO
+def resolve_district(d): #Returns an outDistrict object! 
     #Resolve the district d by doing the following steps:
     #First, count all the first place votes. Each District contains Voters which contain a first, second, and third choice.
     #determine the vote threshold by dividing the total number of voters by the repsToElect number of the District.
@@ -45,13 +45,17 @@ def resolve_district(d): #Returns an outDistrict object! #TODO
     for voter in d.voters:
         voter.resolveVote()
 
-    #TODO [LOOP UNTIL EVERY CANDIDATE HAS WON A SEAT AND WE END UP RETURNING OUTDISTRICT] Check if all seats have been filled, now that each voter's vote has been assigned to one candidate.
+    # [LOOP UNTIL EVERY CANDIDATE HAS WON A SEAT AND WE END UP RETURNING OUTDISTRICT] Check if all seats have been filled, now that each voter's vote has been assigned to one candidate.
         #If they have, return the outDistrict as a list of winning candidates.
 
         #If they have not, sort d.candidates by the votesGained. Then eliminate the last place candidate from the running and,
         # for each Voter in that candidate's Voters list, increment choice by 1 and resolveVoter again
     out = outDistrict(d.name, [])
     while True:
+        for can in d.candidates:
+            if (length(can.voters) > can.votesNeeded) and (can not in out.winners):
+                out.winners.append(can)
+
         if length(out.winners) == repsToElect:
             return out #end function!
         #Sort d.candidates by votesGained
@@ -61,3 +65,7 @@ def resolve_district(d): #Returns an outDistrict object! #TODO
         for v in dropout.voters:
             v.choice += 1
             v.resolveVote()
+
+        #Just as a failsafe:
+        if length(d.candidates) == repsToElect:
+            out.winners = d.candidates
