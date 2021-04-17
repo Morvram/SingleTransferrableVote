@@ -1,15 +1,15 @@
 from District import *
 
 
-def voterGenerationAlgorithm(districts, numVoters, candidatesPerDistrict, choiceVotesForCandidate): #TODO
+def voterGenerationAlgorithm(districts, numVoters, candidatesPerDistrict, choiceVotesForCandidate): # first draft
 
 
-    #districts = a list (1d) of districts
+    #districts = a list (1d) of district names
     #numVoters = a list (1d) of the number of voters in each district.
     #candidatesPerDistrict = a list (2d) of lists of candidates, of equal length.
     #choiceVotesForCandidate = a list (3d):
-        #1st layer Districts
-        #2nd layer Candidates
+        #1st layer: one list corresponding to each district.
+        #2nd layer one list corresponding to each candidate in that district.
         #3rd layer number of votes at first, second, third etc. choice.
 
     #For each district, create the district object using:
@@ -24,12 +24,14 @@ def voterGenerationAlgorithm(districts, numVoters, candidatesPerDistrict, choice
         for c in canNames:
             candidates.append(Candidate(c))
 
+        repsToElect = len(choiceVotesForCandidates[currentDistrict][0])
+
         #3) OK this one's more complicated:
-            #Create a list voters[] of Voter objects of length equal to the total number of first-choice votes that exist in the district,
+            #(1) Create a list voters[] of Voter objects of length equal to the total number of first-choice votes that exist in the district,
             # with empty lists as their contents
 
 
-            #TODO For each Voter in that list, append a first choice candidate. If the first candidate has 754 first-choice votes,
+            # (2) For each Voter in that list, append a first choice candidate. If the first candidate has 754 first-choice votes,
             # the first 754
             #Voter objects will have that candidate inserted as their first choice.
                 # An aside on this: basically, we'll be setting the first choice of the Voter in the i spot of the list of voters,
@@ -41,14 +43,35 @@ def voterGenerationAlgorithm(districts, numVoters, candidatesPerDistrict, choice
                 #YEAH OKAY THIS IS COMPLICATED BUT INTERESTING.
 
             #Do the same for second choice, third choice, etc etc until the end
+
+        #1
         voters = []
-        for n in range(:numVoters[i]):
+        for n in range(0, numVoters[i]):
             voters[n] = Voter([])
-        #TODO follow above todo
+        # follow above todo (2) - 
+        for n in range(0, len(choiceVotesForCandidates[currentDistrict][0])):
+
+            i = 0 #Candidate index in the candidates[] list
+            j = 0 #Voter index in the voters[] list
+            ij = 0 #counter up to number of first-choice votes for that candidate.
+            while j < len(voters):
+                if ij < choiceVotesForCandidate[currentDistrict][i][0]:
+                    ij += 1
+                    voters[j].votes.append(candidates[i])
+                    j += 1
+                else: #switch to the next candidate
+                    ij = 0 #reset this because ij is what counts up to the number of first-choice voters for that candidate.
+                    i += 1
+                #We will eventually run out of voters (j will reach len(voterS))
 
 
-        #TODO repsToElect = the number of representatives that the district in question is electing.
-            #TODO determine how we will decide how many representatives will be elected in a district!
+
+
+        # repsToElect = the number of representatives that the district in question is electing.
+            # determine how we will decide how many representatives will be elected in a district!
+        #note above, line 27: repsToElect = len(choiceVotesForCandidates[currentDistrict][0])
+            # the number of candidates to elect from a district should be equal to the number of choices each voter may cast in that election.
+            # if there are going to be three candidates elected in a particular district race, each voter should choose a first, second, and third choice candidate.
         
         #Then initialize the District object to the current slot in the districts[] list
         districts[i] = District(repsToElect, candidates, voters, name)
