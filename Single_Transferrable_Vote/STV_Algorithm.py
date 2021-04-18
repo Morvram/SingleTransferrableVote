@@ -1,3 +1,5 @@
+#Joshua Mandell
+
 from voterGenerationAlgorithm import *
 from District import *
 

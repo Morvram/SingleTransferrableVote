@@ -1,3 +1,5 @@
+#Joshua Mandell
+
 class District:
     #candidates = [] a list of Candidates
     #voters = [] a list of Voter objects
