@@ -1,6 +1,6 @@
 #Joshua Mandell
 
-from voterGenerationAlgorithm import *
+from VoterGenerationAlgorithm import *
 from District import *
 
 #Takes: A list of District objects, each of which contains: a list of candidates, a list of Voter objects,
@@ -38,8 +38,8 @@ def resolve_district(d): #Returns an outDistrict object!
         #If they have, return the district.
         #If they have not, eliminate the last place candidate from the running. For each Voter in that Candidate's voters list, transfer that voter to 
         #Their next choice candidate's pool instead (assuming taht candidate hasn't already won a seat).
-    
-    voteThreshold = length(d.voters) / repsToElect
+    repsToElect = d.repsToElect
+    voteThreshold = len(d.voters) / repsToElect #where does repsToElect come from?
     for c in d.candidates:
         c.votesNeeded = voteThreshold #set that candidate's votesNeeded to the vote threshold.
 
@@ -55,19 +55,19 @@ def resolve_district(d): #Returns an outDistrict object!
     out = outDistrict(d.name, [])
     while True:
         for can in d.candidates:
-            if (length(can.voters) > can.votesNeeded) and (can not in out.winners):
+            if (len(can.voters) > can.votesNeeded) and (can not in out.winners):
                 out.winners.append(can)
 
-        if length(out.winners) == repsToElect:
+        if len(out.winners) == repsToElect:
             return out #end function!
         #Sort d.candidates by votesGained
-        d.candidates.sort(key=lambda x: x.count, reverse=True)
-        dropout = d.candidates[length(d.candidates-1)]
+        d.candidates.sort(key=lambda x: len(x.voters), reverse=True)
+        dropout = d.candidates[len(d.candidates)-1]
         d.candidates.remove(dropout)
         for v in dropout.voters:
             v.choice += 1
             v.resolveVote()
 
         #Just as a failsafe:
-        if length(d.candidates) == repsToElect:
+        if len(d.candidates) == repsToElect:
             out.winners = d.candidates

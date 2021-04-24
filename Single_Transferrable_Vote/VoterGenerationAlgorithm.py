@@ -3,7 +3,7 @@
 from District import *
 
 
-def voterGenerationAlgorithm(districts, numVoters, candidatesPerDistrict, choiceVotesForCandidate): # first draft
+def voterGenerationAlgorithm(districts, numVoters, candidatesPerDistrict, choiceVotesForCandidates): # first draft
 
 
     #districts = a list (1d) of district names
@@ -16,7 +16,7 @@ def voterGenerationAlgorithm(districts, numVoters, candidatesPerDistrict, choice
 
     #For each district, create the district object using:
     i = 0
-    while i < length(districts):
+    while i < len(districts):
         name = districts[i]
         #1) The relevant name,
 
@@ -26,7 +26,7 @@ def voterGenerationAlgorithm(districts, numVoters, candidatesPerDistrict, choice
         for c in canNames:
             candidates.append(Candidate(c))
 
-        repsToElect = len(choiceVotesForCandidates[currentDistrict][0])
+        repsToElect = len(choiceVotesForCandidates[i][0])
 
         #3) OK this one's more complicated:
             #(1) Create a list voters[] of Voter objects of length equal to the total number of first-choice votes that exist in the district,
@@ -49,21 +49,21 @@ def voterGenerationAlgorithm(districts, numVoters, candidatesPerDistrict, choice
         #1
         voters = []
         for n in range(0, numVoters[i]):
-            voters[n] = Voter([])
+            voters.append(Voter([])) #voters[n] = Voter([])
         # follow above todo (2) - 
-        for n in range(0, len(choiceVotesForCandidates[currentDistrict][0])):
+        for n in range(0, len(choiceVotesForCandidates[i][0])):
 
-            i = 0 #Candidate index in the candidates[] list
+            k = 0 #Candidate index in the candidates[] list
             j = 0 #Voter index in the voters[] list
             ij = 0 #counter up to number of first-choice votes for that candidate.
             while j < len(voters):
-                if ij < choiceVotesForCandidate[currentDistrict][i][0]:
+                if ij < choiceVotesForCandidates[i][k][0]: #i represents current district, k represents candidate index in candidates[] list
                     ij += 1
-                    voters[j].votes.append(candidates[i])
+                    voters[j].votes.append(candidates[k])
                     j += 1
                 else: #switch to the next candidate
                     ij = 0 #reset this because ij is what counts up to the number of first-choice voters for that candidate.
-                    i += 1
+                    k += 1
                 #We will eventually run out of voters (j will reach len(voterS))
 
 
