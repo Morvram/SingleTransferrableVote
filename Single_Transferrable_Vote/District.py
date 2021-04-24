@@ -23,8 +23,12 @@ class Voter:
         # and add self to that Candidate's list of voters.
         votes = self.votes
         choice = self.choice
+        if choice >= len(self.votes):
+            votes[len(self.votes)-1].voters.append(self)
+            return
+
         if len(votes[choice].voters) < votes[choice].votesNeeded and self not in votes[choice].voters:
-            print("Index was not out of range")
+            #print("Index was not out of range")
             votes[choice].voters.append(self)
             return
         #If your current choice DOES have enough votes and you're not at the end of your list of choices,
@@ -33,8 +37,10 @@ class Voter:
             self.choice += 1
             if self.choice >= len(self.votes):
                 #print("Problem: Not enough choices were provided, and a voter exceeded their list of chosen candidates!")
+                votes[choice-1].voters.append(self)
                 return #Something has gone wrong
-            self.resolveVote() #the "try again" phase
+            else:
+                self.resolveVote() #the "try again" phase
 
 
 class Candidate:

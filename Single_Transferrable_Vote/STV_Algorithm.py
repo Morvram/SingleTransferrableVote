@@ -23,7 +23,9 @@ def STV_Algorithm(districts): #returns a list of outDistrict objects!
     #TEST
     outlist = []
     for dist in districts:
+        print("Resolving district: " + dist.name)
         outlist.append(resolve_district(dist))
+        print("Resolved district: " + dist.name)
     return outlist
 
 
@@ -53,21 +55,30 @@ def resolve_district(d): #Returns an outDistrict object!
         #If they have not, sort d.candidates by the votesGained. Then eliminate the last place candidate from the running and,
         # for each Voter in that candidate's Voters list, increment choice by 1 and resolveVoter again
     out = outDistrict(d.name, [])
-    while True:
+    while True: #TODO this is an infinite loop! Figure out what's going on here!
+        print("Looping through candidates")
         for can in d.candidates:
+            #print("Candidate: " + can.name)
             if (len(can.voters) > can.votesNeeded) and (can not in out.winners):
                 out.winners.append(can)
 
         if len(out.winners) == repsToElect:
+            print("Reached return of outdistrict in the resolve_district function!")
             return out #end function!
         #Sort d.candidates by votesGained
+        print("Sorting candidates...")
         d.candidates.sort(key=lambda x: len(x.voters), reverse=True)
+        print("Candidates sorted.")
         dropout = d.candidates[len(d.candidates)-1]
         d.candidates.remove(dropout)
+        print("Dropped a candidate.")
         for v in dropout.voters:
             v.choice += 1
+            dropout.voters.remove(v)
             v.resolveVote()
 
         #Just as a failsafe:
         if len(d.candidates) == repsToElect:
             out.winners = d.candidates
+
+        out.winners.append(d.candidates[0])

@@ -18,6 +18,7 @@ def voterGenerationAlgorithm(districts, numVoters, candidatesPerDistrict, choice
     i = 0
     while i < len(districts):
         name = districts[i]
+        print("Moving through " + name)
         #1) The relevant name,
 
         #2) The candidate names in that district, (initialize the Candidates as objects)
@@ -77,6 +78,7 @@ def voterGenerationAlgorithm(districts, numVoters, candidatesPerDistrict, choice
         
         #Then initialize the District object to the current slot in the districts[] list
         districts[i] = District(repsToElect, candidates, voters, name)
+        print("For District: " + name + ": we will elect " + str(repsToElect) + " representatives from the following: " + str(candidates) + ". There are " + str(len(voters)) + " voters.")
         i += 1
 
     #You should now have a list of Districts, each of which has Candidates (whose Voter pools are not yet filled)
